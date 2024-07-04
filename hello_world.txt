@@ -1,2 +1,70 @@
-I am from Taiwan
+#include<iostream>
+using namespace std;
+
+int n, m;
+
+char theMap [1000][1000] = { };
+bool visited[1000][1000] = { };
+
+
+bool walkable(int r, int c)
+{
+    if (r < 0 || r >= n || c < 0 || c >= m) return false;
+    if (theMap[r][c] == '#') return false;
+    if (visited[r][c] == 1) return false;
+    
+    
+    return true;
+}
+
+void explore (int x, int y)
+{
+    visited[x][y] = 1;
+
+    if (walkable(x + 1, y)) explore (x + 1, y);
+    if (walkable(x - 1, y)) explore (x - 1, y);
+    if (walkable(x, y + 1)) explore (x, y + 1);
+    if (walkable(x, y - 1)) explore (x, y - 1);
+
+    
+}
+
+int main()
+{
+    int startx = 0, starty = 0; 
+    int endx = 0, endy = 0;
+    
+    cin >> n >> m;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            cin >> theMap[i][j];
+
+            if (theMap[i][j] == 'S')
+            {
+                startx = i;
+                starty = j;
+            }
+
+            if (theMap[i][j] == 'E')
+            {
+                endx = i;
+                endy = j;
+            }
+        }
+    }
+
+    explore(startx, starty);
+
+    if (visited[endx][endy] == 1) cout << "YES";
+    else cout << "NO";
+
+    
+    
+
+
+    return 0;
+}
+
 
